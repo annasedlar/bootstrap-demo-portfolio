@@ -5,6 +5,23 @@
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+	<link rel="stylesheet" type="text/css" href="styles.css">
+
+	<!-- Flexslider CSS  -->
+	<link rel="stylesheet" type="text/css" href="FlexSlider/flexslider.css">
+
+	<!-- jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<!-- //bootstrap.js comes AFTER jQUERY because bootstrap.js REQURES/USES jquery. -->
+	<!-- ALWAYS put jQuery at the top of your list of scripts -->
+
+	<!-- bootstrap js -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<!-- flexslider js-->
+	<script src="FlexSlider/jquery.flexslider-min.js"></script>
+
 	<style>
 		img{
 			max-width: 100%;
@@ -21,11 +38,62 @@
 			margin-bottom: 25px;
 		}
 	</style>
+
 </head>
 
 
 
 <body>
+
+	<script> 
+	$(document).ready(function() {
+	    $('.flexslider').flexslider({
+    	animation: "slide"
+ 	 	});
+		});
+	</script>
+
+	  // Vimeo API nonsense
+  <script>
+
+  $(document).ready(function() {
+  	var player = document.getElementById('player_1');
+  $f(player).addEvent('ready', ready);
+ 
+  function addEvent(element, eventName, callback) {
+    if (element.addEventListener) {
+      element.addEventListener(eventName, callback, false)
+    } else {
+      element.attachEvent(eventName, callback, false);
+    }
+  }
+ 
+  function ready(player_id) {
+    var froogaloop = $f(player_id);
+    froogaloop.addEvent('play', function(data) {
+      $('.flexslider').flexslider("pause");
+    });
+    froogaloop.addEvent('pause', function(data) {
+      $('.flexslider').flexslider("play");
+    });
+  }
+ 
+ 
+  // Call fitVid before FlexSlider initializes, so the proper initial height can be retrieved.
+  $(".flexslider")
+    .fitVids()
+    .flexslider({
+      animation: "slide",
+      useCSS: false,
+      animationLoop: false,
+      smoothHeight: true,
+      before: function(slider){
+        $f(player).api('pause');
+      }
+  });
+});
+</script>
+
 	<nav class="navbar navbar-default navbar-fixed-top">
 	  <div class="container-fluid">
 	    <!-- Brand and toggle get grouped for better mobile display -->
@@ -43,7 +111,9 @@
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav">
 	        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-	        <li><a href="#">Link</a></li>
+	        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+			  Launch demo modal
+			</button>
 	        <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
 	          <ul class="dropdown-menu">
@@ -92,8 +162,44 @@
 				<h1 class="text-danger"> I'm the greatest web dev on the planet. Period.</h1>
 				<!-- Fine here's what I can do -->
 				<h2>HTML, JS, CSS, Node.js, react, python, Flask</h2>
+				<!-- Place somewhere in the <body> of your page -->
+				<div class="flexslider">
+				  <ul class="slides">
+				    <li>
+				      <img src="portfolio-images/circus.png" />
+				    </li>
+				    <li>
+				      <img src="portfolio-images/cake.png" />
+				    </li>
+				    <li>
+				      <img src="portfolio-images/submarine.png" />
+				    </li>
+				    <li>
+				      <img src="portfolio-images/cabin.png" />
+				    </li>
+				    <!-- items mirrored twice, total of 12 -->
+				  </ul>
+				</div>
 			</div>
 		</div>
+	</div>
+
+	<!-- Place somewhere in the <body> of your page -->
+	<div class="flexslider">
+	  <ul class="slides">
+	    <li>
+	      <iframe id="player_1" src="https://player.vimeo.com/video/39683393?api=1&player_id=player_1" width="500" height="281" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+	    </li>
+	    <li>
+	      <img src="slide2.jpg" />
+	    </li>
+	    <li>
+	      <img src="slide3.jpg" />
+	    </li>
+	    <li>
+	      <img src="slide4.jpg" />
+	    </li>
+	  </ul>
 	</div>
 
 
@@ -102,10 +208,16 @@
 	<div class="container text-center">
 		<div class="row">
 			<h2>Portfolio</h2>
+		
 			<!-- Images, 3 columns wide on medium, 2 col wide on small-->
 			<!-- stack by default on xs -->
+
+			<!-- <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Tooltip on left</button> -->
+
 			<div class="col-sm-6 col-md-4">
+				<a href='#' data-toggle="tooltip" data-placement="left" title="this project was done in html, js, css, jquery">
 				<img src="portfolio-images/cabin.png">
+				</a>
 			</div>
 			<div class="col-sm-6 col-md-4">
 				<img src="portfolio-images/cake.png">
@@ -183,6 +295,44 @@
 
 		</div>
 	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Good Morning!</h4>
+      </div>
+      <div class="modal-body">
+		Thanks for visiting - would you like to be added to our mailing list to keep up with our events? 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Heck Yes! </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 </body>
 </html>
